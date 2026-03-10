@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_10_140923) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_10_201609) do
   create_table "admin_users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -34,7 +34,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_10_140923) do
   end
 
   create_table "matches", force: :cascade do |t|
-    t.integer "type"
+    t.integer "match_type"
     t.integer "team1_id", null: false
     t.integer "team2_id", null: false
     t.integer "winner_team_id", null: false
