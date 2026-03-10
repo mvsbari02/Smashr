@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 1
+  team1: one
+  team2: one
+  winner_team: one
+  started_at: 2026-03-10 17:50:04
+  ended_at: 2026-03-10 17:50:04
+  best_of: 1
+
+two:
+  type: 1
+  team1: two
+  team2: two
+  winner_team: two
+  started_at: 2026-03-10 17:50:04
+  ended_at: 2026-03-10 17:50:04
+  best_of: 1
