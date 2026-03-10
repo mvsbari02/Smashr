@@ -7,6 +7,7 @@ one:
   matches: 1
   wins: 1
   password_digest: 1
+  status: active
 
 two:
   name: MyString
@@ -15,3 +16,4 @@ two:
   matches: 1
   wins: 1
   password_digest: 1
+  status: active
