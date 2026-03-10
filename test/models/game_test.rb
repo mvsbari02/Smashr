@@ -5,9 +5,12 @@ class GameTest < ActiveSupport::TestCase
     @team1 = Team.create!(name: "Team A")
     @team2 = Team.create!(name: "Team B")
     @match = Match.create!(
+      match_type: :singles,
       team1: @team1,
       team2: @team2,
-      winner_team: @team1
+      winner_team: @team1,
+      started_at: Time.current,
+      ended_at: Time.current + 30.minutes
     )
   end
 
