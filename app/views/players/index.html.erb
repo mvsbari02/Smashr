@@ -1,0 +1,30 @@
+<h1 class="mb-4">Players List</h1>
+
+<div class="container">
+  <table class="table table-striped table-hover table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Country</th>
+        <th>Status</th>
+        <th>Matches</th>
+        <th>Wins</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @players.each do |player| %>
+        <tr>
+          <td><%= player.name %></td>
+          <td><%= player.email %></td>
+          <td><%= player.country %></td>
+          <td><%= player.status %></td>
+          <td><%= player.matches %></td>
+          <td><%= player.wins %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to "Add New Player", new_player_path, class: "btn btn-primary mt-3" %>
+</div>

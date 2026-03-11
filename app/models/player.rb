@@ -6,4 +6,8 @@ class Player < ApplicationRecord
         active: 0,
         beta_active: 1
     }
+
+    validates :name, presence: true
+    validates :email, presence: true, uniqueness: true
+    validates :country, presence: true
 end

@@ -1,0 +1,40 @@
+<h1>New Player</h1>
+
+<%= form_with model: @player, local: true do |f| %>
+  <% if @player.errors.any? %>
+    <div>
+      <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
+      <ul>
+        <% @player.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+
+  <div>
+    <%= f.label :country %>
+    <%= f.text_field :country %>
+  </div>
+
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, Player.statuses.keys.map { |k| [k.humanize, k] } %>
+  </div>
+
+  <div>
+    <%= f.submit "Create Player" %>
+  </div>
+<% end %>
+
+<%= link_to "Back to List", players_path %>
