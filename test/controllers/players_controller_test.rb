@@ -62,4 +62,30 @@ class PlayersControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :unprocessable_entity
   end
+
+  test "should get edit" do
+    get edit_player_path(@player)
+    assert_response :success
+    assert_select "h1", "Edit Player"
+  end
+
+  test "should update player with valid attributes" do
+    patch player_path(@player), params: {
+      player: {
+        name: "Updated Name"
+      }
+    }
+
+    assert_redirected_to players_path
+    @player.reload
+    assert_equal "Updated Name", @player.name
+  end
+
+  test "should destroy player" do
+    assert_difference("Player.count", -1) do
+      delete player_path(@player)
+    end
+
+    assert_redirected_to players_path
+  end
 end

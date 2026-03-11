@@ -17,6 +17,25 @@ class PlayersController < ApplicationController
     end
   end
 
+  def edit
+    @player = Player.find_by(id: params[:id])
+  end
+
+  def update
+    @player = Player.find_by(id: params[:id])
+    if @player.update(player_params)
+      redirect_to players_path, notice: "Player updated successfully."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @player = Player.find_by(id: params[:id])
+    @player.destroy
+    redirect_to players_path, notice: "Player deleted successfully."
+  end
+
   private
 
   def player_params
