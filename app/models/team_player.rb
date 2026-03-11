@@ -2,7 +2,8 @@ class TeamPlayer < ApplicationRecord
   belongs_to :team
   belongs_to :player
 
-  validate :player_must_be_active
+  # validate :player_must_be_active
+  validates :player_id, uniqueness: { scope: :team_id }
 
   private
 

@@ -1,0 +1,59 @@
+<h1>Manage Players for <%= @team.name %></h1>
+
+<h2>Current Team Players</h2>
+
+<% if @team_players.any? %>
+  <table class="table table-striped table-hover table-bordered align-middle">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Matches</th>
+        <th>Wins</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @team_players.each do |team_player| %>
+        <tr>
+          <td><%= team_player.player.name %></td>
+          <td><%= team_player.player.matches %></td>
+          <td><%= team_player.player.wins %></td>
+          <td>
+            <%= button_to "Remove",
+                          remove_player_admin_team_path(@team, player_id: team_player.player.id),
+                          method: :delete,
+                          data: { turbo_confirm: "Are you sure?" },
+                          class: "btn btn-sm btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p>No players have been added to this team yet.</p>
+<% end %>
+
+<hr>
+
+<h2>Add Players</h2>
+
+<%= form_with url: add_players_admin_team_path(@team), method: :post, local: true do %>
+  <div>
+    <%= label_tag :player_ids, "Select Players" %><br>
+
+    <%= select_tag "player_ids[]",
+          options_from_collection_for_select(@available_players, :id, :name),
+          multiple: true,
+          size: 8 %>
+  </div>
+
+  <br>
+
+  <div>
+    <%= submit_tag "Add Selected Players" %>
+  </div>
+<% end %>
+
+<br>
+
+<%= link_to "Back to Teams", admin_teams_path %>

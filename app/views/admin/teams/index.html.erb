@@ -1,0 +1,38 @@
+<h2>Teams List</h2>
+
+<table class="table table-striped table-hover table-bordered align-middle">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Edit / View Players</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @teams.each do |team| %>
+      <tr>
+        <td><%= team.name %></td>
+
+        <td>
+          <%= link_to "Players", players_admin_team_path(team), class: "btn btn-sm btn-primary" %>
+        </td>
+
+        <td>
+          <%= link_to "Edit", edit_admin_team_path(team), class: "btn btn-sm btn-warning" %>
+        </td>
+
+        <td>
+          <%= button_to "Delete",
+                        admin_team_path(team),
+                        method: :delete,
+                        data: { turbo_confirm: "Are you sure?" },
+                        class: "btn btn-sm btn-danger" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "Add New Team", new_admin_team_path, class: "btn btn-primary mt-3" %>
