@@ -14,7 +14,7 @@ class Admin::PlayersControllerTest < ActionDispatch::IntegrationTest
   test "should get index" do
     get admin_players_path
     assert_response :success
-    assert_select "h1", "Players List"
+    assert_select "h2", "Players List"
     assert_select "td", @player.name
   end
 
@@ -22,7 +22,7 @@ class Admin::PlayersControllerTest < ActionDispatch::IntegrationTest
   test "should get new" do
     get new_admin_player_path
     assert_response :success
-    assert_select "h1", "New Player"
+    assert_select "h2", "New Player"
   end
 
   # POST /players with valid data
@@ -66,7 +66,7 @@ class Admin::PlayersControllerTest < ActionDispatch::IntegrationTest
   test "should get edit" do
     get edit_admin_player_path(@player)
     assert_response :success
-    assert_select "h1", "Edit Player"
+    assert_select "h2", "Edit Player"
   end
 
   test "should update player with valid attributes" do
