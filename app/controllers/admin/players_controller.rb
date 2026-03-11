@@ -1,4 +1,4 @@
-class PlayersController < ApplicationController
+class Admin::PlayersController < ApplicationController
   def index
     @players = Player.all.order(created_at: :desc)
   end
@@ -11,7 +11,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
-      redirect_to players_path, notice: "Player created successfully."
+      redirect_to admin_players_path, notice: "Player created successfully."
     else
       render :new, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class PlayersController < ApplicationController
   def update
     @player = Player.find_by(id: params[:id])
     if @player.update(player_params)
-      redirect_to players_path, notice: "Player updated successfully."
+      redirect_to admin_players_path, notice: "Player updated successfully."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class PlayersController < ApplicationController
   def destroy
     @player = Player.find_by(id: params[:id])
     @player.destroy
-    redirect_to players_path, notice: "Player deleted successfully."
+    redirect_to admin_players_path, notice: "Player deleted successfully."
   end
 
   private
