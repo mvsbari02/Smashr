@@ -15,5 +15,5 @@ class TeamPlayerTest < ActiveSupport::TestCase
 
   #   assert_not team_player.valid?
   #   assert_includes team_player.errors[:player], "must be active to be added to a team"
-  end
+  # end
 end
