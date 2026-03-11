@@ -1,5 +1,5 @@
 class Admin::TeamsController < ApplicationController
-  before_action :set_team, only: [:index, :new, :create, :edit, :update, :destroy, :players, :add_players, :remove_player]
+  before_action :set_team, only: [ :index, :new, :create, :edit, :update, :destroy, :players, :add_players, :remove_player ]
 
   def new
     @team = Team.new
