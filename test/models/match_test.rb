@@ -49,7 +49,6 @@ class MatchTest < ActiveSupport::TestCase
       team1: @team1,
       team2: @team2,
       match_type: :singles,
-      winner_team: @team1,
       started_at: Time.current,
       ended_at: Time.current + 30.minutes
     )
