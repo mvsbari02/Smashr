@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_03_12_103232) do
+ActiveRecord::Schema[8.0].define(version: 2026_03_12_113103) do
   create_table "admin_users", force: :cascade do |t|
     t.string "username"
     t.string "email"
@@ -24,7 +24,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_03_12_103232) do
     t.integer "set_number"
     t.integer "team1_score"
     t.integer "team2_score"
-    t.integer "winner_team_id", null: false
+    t.integer "winner_team_id"
     t.datetime "started_at"
     t.datetime "ended_at"
     t.datetime "created_at", null: false
