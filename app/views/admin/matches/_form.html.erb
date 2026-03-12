@@ -1,0 +1,91 @@
+<%= form_with model: [:admin, match], local: true do |f| %>
+  <% if match.errors.any? %>
+    <div>
+      <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
+      <ul>
+        <% match.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :match_type %>
+    <%= f.select :match_type, Match.match_types.keys.map { |k| [k.humanize, k] } %>
+  </div>
+
+  <div>
+    <%= f.label :team1_id, "Team 1" %>
+    <%= f.collection_select :team1_id, @teams, :id, :name %>
+  </div>
+
+  <div>
+    <%= f.label :team2_id, "Team 2" %>
+    <%= f.collection_select :team2_id, @teams, :id, :name %>
+  </div>
+
+  <div>
+    <%= f.label :started_at %>
+    <%= f.datetime_select :started_at %>
+  </div>
+
+  <div>
+    <%= f.label :best_of %>
+    <%= f.select :best_of, [["Best of 3", 3], ["Best of 2", 2]] %>
+  </div>
+
+  <% if match.persisted? %>
+    <div>
+      <%= f.label :winner_team_id, "Winner Team" %>
+      <%= f.collection_select :winner_team_id, [match.team1, match.team2].compact, :id, :name, include_blank: true %>
+    </div>
+
+    <div>
+      <%= f.label :ended_at %>
+      <%= f.datetime_select :ended_at, include_blank: true %>
+    </div>
+
+    <h2>Games</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Set Number</th>
+          <th>Team 1 Score</th>
+          <th>Team 2 Score</th>
+          <th>Winner Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= f.fields_for :games do |game_fields| %>
+          <tr>
+            <td>
+              <%= game_fields.object.set_number %>
+              <%= game_fields.hidden_field :id %>
+            </td>
+            <td>
+              <%= game_fields.number_field :team1_score %>
+            </td>
+            <td>
+              <%= game_fields.number_field :team2_score %>
+            </td>
+            <td>
+              <%= game_fields.collection_select :winner_team_id,
+                                                [match.team1, match.team2].compact,
+                                                :id,
+                                                :name,
+                                                include_blank: true %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<%= link_to "Back to Matches", admin_matches_path %>
