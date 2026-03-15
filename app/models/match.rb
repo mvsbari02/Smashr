@@ -12,10 +12,13 @@ class Match < ApplicationRecord
 
   validate :teams_must_be_different
   validates :started_at, presence: true
+  validates :best_of, presence: true
   # validates :ended_at, presence: true
   validates :match_type, presence: true
   validate :teams_must_be_valid_for_match_type
   validate :start_time_must_be_in_future, on: :create
+  validate :winner_team_requires_all_games_to_have_winners
+  validate :ended_at_must_be_after_started_at, if: -> { ended_at.present? && started_at.present? }
 
   private
 
@@ -40,6 +43,26 @@ class Match < ApplicationRecord
       if team2.players.count != 2
         errors.add(:team2, "must have exactly 2 players for doubles matches")
       end
+    end
+  end
+
+  def winner_team_requires_all_games_to_have_winners
+    return if winner_team_id.blank?
+
+    incomplete_games = games.select { |g| g.winner_team_id.blank? }
+
+    if incomplete_games.any?
+      game_numbers = incomplete_games.map(&:set_number).sort.join(", ")
+      errors.add(:winner_team,
+                "cannot be selected until all games have winners. Incomplete games: #{game_numbers}")
+    end
+  end
+
+  def ended_at_must_be_after_started_at
+    return if started_at.blank? || ended_at.blank?
+
+    if ended_at <= started_at
+      errors.add(:ended_at, "must be greater than started at")
     end
   end
 
