@@ -28,8 +28,8 @@ class Game < ApplicationRecord
       return
     end
 
-    winner_score = [score1, score2].max
-    loser_score  = [score1, score2].min
+    winner_score = [ score1, score2 ].max
+    loser_score  = [ score1, score2 ].min
     difference   = winner_score - loser_score
 
     if loser_score < 20 && winner_score != 21
