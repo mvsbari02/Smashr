@@ -168,4 +168,83 @@ class MatchTest < ActiveSupport::TestCase
 
     assert @match.valid?, @match.errors.full_messages.join(", ")
   end
+
+  # these tests will be added after game creation logic is moved out of controller
+  # test "match is invalid when all games have winners but winner team is not selected" do
+  #   @match.games.find_by(set_number: 1)&.update!(
+  #     team1_score: 21,
+  #     team2_score: 18,
+  #     winner_team: @team1
+  #   )
+  #   @match.games.find_by(set_number: 2)&.update!(
+  #     team1_score: 18,
+  #     team2_score: 21,
+  #     winner_team: @team2
+  #   )
+  #   @match.games.find_by(set_number: 3)&.update!(
+  #     team1_score: 21,
+  #     team2_score: 19,
+  #     winner_team: @team1
+  #   )
+
+  #   @match.winner_team = nil
+
+  #   assert_not @match.valid?
+  #   assert_includes @match.errors[:winner_team], "must be selected when all games have winners"
+  # end
+
+  # test "match is invalid when winner team does not match the team with most game wins" do
+  #   @match.games.find_by(set_number: 1)&.update!(
+  #     team1_score: 21,
+  #     team2_score: 18,
+  #     winner_team: @team1
+  #   )
+  #   @match.games.find_by(set_number: 2)&.update!(
+  #     team1_score: 18,
+  #     team2_score: 21,
+  #     winner_team: @team2
+  #   )
+  #   @match.games.find_by(set_number: 3)&.update!(
+  #     team1_score: 21,
+  #     team2_score: 19,
+  #     winner_team: @team1
+  #   )
+
+  #   @match.winner_team = @team2
+  #   @match.ended_at = 2.hours.from_now
+
+  #   assert_not @match.valid?
+  #   assert_includes @match.errors[:winner_team], "must be the team with the most game wins"
+  # end
+
+  test "match is invalid when winner team is selected but ended_at is blank" do
+    @match.winner_team = @team1
+    @match.ended_at = nil
+
+    assert_not @match.valid?
+    assert_includes @match.errors[:ended_at], "must be selected when winner team is selected"
+  end
+
+  test "match is valid when winner team matches most game wins and ended_at is present" do
+    @match.games.find_by(set_number: 1)&.update!(
+      team1_score: 21,
+      team2_score: 18,
+      winner_team: @team1
+    )
+    @match.games.find_by(set_number: 2)&.update!(
+      team1_score: 18,
+      team2_score: 21,
+      winner_team: @team2
+    )
+    @match.games.find_by(set_number: 3)&.update!(
+      team1_score: 21,
+      team2_score: 19,
+      winner_team: @team1
+    )
+
+    @match.winner_team = @team1
+    @match.ended_at = 2.hours.from_now
+
+    assert @match.valid?, @match.errors.full_messages.join(", ")
+  end
 end
