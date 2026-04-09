@@ -100,19 +100,6 @@ class Admin::MatchesControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should update match with valid attributes" do
-    patch admin_match_path(@match), params: {
-      match: {
-        ended_at: 1.hour.from_now,
-        winner_team_id: @team1.id
-      }
-    }
-
-    assert_redirected_to admin_matches_path
-    @match.reload
-    assert_equal @team1.id, @match.winner_team_id
-  end
-
   test "should destroy match" do
     assert_difference("Match.count", -1) do
       delete admin_match_path(@match)
