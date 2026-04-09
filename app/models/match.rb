@@ -7,6 +7,7 @@ class Match < ApplicationRecord
 
   after_update_commit :update_player_stats_after_result, if: :winner_just_declared?
   after_create :initialize_games_for_match
+  after_destroy_commit :update_player_stats_after_delete, if: -> { winner_team_id.present? }
 
   enum :match_type, {
     singles: 0,
@@ -151,6 +152,19 @@ class Match < ApplicationRecord
   def initialize_games_for_match
     (1..best_of).each do |set_number|
       games.create!(set_number: set_number)
+    end
+  end
+
+  def update_player_stats_after_delete
+    Match.transaction do
+      all_players = team1.players.to_a + team2.players.to_a
+      all_players.each do |player|
+        player.decrement!(:matches)
+      end
+
+      winner_team.players.each do |player|
+        player.decrement!(:wins)
+      end
     end
   end
 end
