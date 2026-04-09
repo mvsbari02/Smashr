@@ -11,12 +11,17 @@ Rails.application.routes.draw do
   namespace :admin do
     root "home#index"
 
-    resources :players
-      resources :teams do
-        member do
-          get :players
-          post :add_players
-          delete "players/:player_id", to: "teams#remove_player", as: :remove_player
+    resources :players do
+      collection do
+        get :leaderboard
+      end
+    end
+
+    resources :teams do
+      member do
+        get :players
+        post :add_players
+        delete "players/:player_id", to: "teams#remove_player", as: :remove_player
       end
     end
     resources :matches

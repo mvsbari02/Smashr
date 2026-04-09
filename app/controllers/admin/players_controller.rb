@@ -36,6 +36,10 @@ class Admin::PlayersController < ApplicationController
     redirect_to admin_players_path, notice: "Player deleted successfully."
   end
 
+  def leaderboard
+    @players = Player.order(wins: :desc, matches: :asc, created_at: :asc)
+  end
+
   private
 
   def player_params
