@@ -11,7 +11,7 @@ class Admin::MatchesController < ApplicationController
   def create
     @match = Match.new(match_params)
     @teams = Team.order(:name)
-    create_games_for_match(@match)
+
     if @match.save
       redirect_to admin_matches_path, notice: "Match created successfully."
     else
@@ -59,12 +59,5 @@ class Admin::MatchesController < ApplicationController
         :winner_team_id
       ]
     )
-  end
-
-  def create_games_for_match(match)
-    best_of = match.best_of || 3
-    (1..best_of).each do |set_number|
-      match.games.build(set_number: set_number)
-    end
   end
 end

@@ -6,6 +6,7 @@ class Match < ApplicationRecord
   accepts_nested_attributes_for :games
 
   after_update_commit :update_player_stats_after_result, if: :winner_just_declared?
+  after_create :initialize_games_for_match
 
   enum :match_type, {
     singles: 0,
@@ -145,5 +146,11 @@ class Match < ApplicationRecord
     return nil if top_teams.size != 1
 
     top_teams.first
+  end
+
+  def initialize_games_for_match
+    (1..best_of).each do |set_number|
+      games.create!(set_number: set_number)
+    end
   end
 end
